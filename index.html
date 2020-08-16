@@ -82,6 +82,8 @@
             weatherCondition.innerText = `${weather.weather[0].main}`;
 
             
+            // Controlling images
+
             if(weatherCondition.innerText == 'Rain'){
                 let weatherImage = document.getElementById("weather-condition-image");
                 weatherImage.src = "images/rain_s_cloudy.png";
@@ -104,9 +106,6 @@
             }
 
         }
-
-
-    
 
     </script>
 
