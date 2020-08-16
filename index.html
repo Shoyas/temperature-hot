@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="images/partly_cloudy.png" type="image/x-icon">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+        .weather-status{
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="input-location" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button type="button" id="search-button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div id="weather-status" class="weather-status text-white text-center">
+            <img id="weather-condition-image" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="districtName">Dhaka</h1>
+            <h3><span id="temperature">38.06</span>&deg;C</h3>
+            <h1 class="lead" id="weather-condition">Clouds</h1>
+        </div>
+    </div>
+
+    <script>
+        //  996f3e756953dab8d206b4ba7b68af06
+        //  api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
+
+        const weatherApi = {
+            key : '996f3e756953dab8d206b4ba7b68af06',
+            baseUrl : "https://api.openweathermap.org/data/2.5/weather",
+        }
+
+        // Taking city name by click mouce
+        document.getElementById('search-button').addEventListener('click', (action) => {
+            const input = document.getElementById('input-location').value;
+            console.log(input);
+            weatherReport(input);
+        })
+
+        // fetch API for find out weather report
+
+        function weatherReport(city){
+            fetch(`${weatherApi.baseUrl}?q=${city}&appid=${weatherApi.key}&units=metric`)
+            .then(weather => {
+                return weather.json();
+            })
+            .then(showWeatherReport);
+        }
+
+        // Show weather report
+        function showWeatherReport(weather){
+            console.log(weather);
+
+            document.getElementById("weather-status").style.display = "block";
+
+            let districtName = document.getElementById("districtName");
+            districtName.innerText = `${weather.name}, ${weather.sys.country}`;
+
+            let temperature = document.getElementById("temperature");
+            temperature.innerText = `${weather.main.temp}`;
+
+            let weatherCondition = document.getElementById("weather-condition");
+            weatherCondition.innerText = `${weather.weather[0].main}`;
+
+            
+            if(weatherCondition.innerText == 'Rain'){
+                let weatherImage = document.getElementById("weather-condition-image");
+                weatherImage.src = "images/rain_s_cloudy.png";
+            }
+            else if(weatherCondition.innerText == 'Mist'){
+                let weatherImage = document.getElementById("weather-condition-image");
+                weatherImage.src = "images/mist.png";
+            }
+            else if(weatherCondition.innerText == "Clouds"){
+                let weatherImage = document.getElementById("weather-condition-image");
+                weatherImage.src = "images/partly_cloudy.png";
+            }
+            else if(weatherCondition.innerText == "Clouds"){
+                let weatherImage = document.getElementById("weather-condition-image");
+                weatherImage.src = "images/partly_cloudy.png";
+            }
+            else if(weatherCondition.innerText == "Clear"){
+                let weatherImage = document.getElementById("weather-condition-image");
+                weatherImage.src = "images/partly_cloudy.png";
+            }
+
+        }
+
+
+    
+
+    </script>
+
+</body>
+
+</html>
